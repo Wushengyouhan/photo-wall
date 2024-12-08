@@ -1,24 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import ProgressBar from "./ProgressBar";
 
 const TIMER = 3000;
 
 export default function DeleteConfirmation({ onConfirm, onCancel }) {
-  const [remainingTime, seRemainingTime] = useState(TIMER);
-
-  useEffect(() => {
-    console.log("Interval SET");
-    const interval = setInterval(() => {
-      console.log("Interval excuting...");
-      seRemainingTime((prev) => prev - 10);
-    }, 10);
-
-    // 组件卸载时清除定时器，否则它会一直运行
-    return () => {
-      console.log("Cleaning up interval");
-      clearInterval(interval);
-    };
-  }, []);
-
   useEffect(() => {
     console.log("TIMER SET");
     const timer = setTimeout(() => {
@@ -30,6 +15,7 @@ export default function DeleteConfirmation({ onConfirm, onCancel }) {
       clearTimeout(timer);
     };
   }, [onConfirm]);
+
   return (
     <div id="delete-confirmation">
       <h2>Are you sure?</h2>
@@ -42,7 +28,7 @@ export default function DeleteConfirmation({ onConfirm, onCancel }) {
           Yes
         </button>
       </div>
-      <progress value={remainingTime} max={TIMER} />
+      <ProgressBar timer={TIMER} />
     </div>
   );
 }
